@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Pedido {
     private int id;
@@ -119,5 +120,35 @@ public class Pedido {
 
     public void setDevolucao(Devolucao devolucao) {
         this.devolucao = devolucao;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pedido pedido = (Pedido) o;
+        return id == pedido.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", cliente='" + cliente + '\'' +
+                ", data=" + data +
+                ", status=" + status +
+                ", enderecoEntrega=" + enderecoEntrega +
+                ", metodoPagamento='" + metodoPagamento + '\'' +
+                ", frete=" + frete +
+                ", valorTotal=" + valorTotal +
+                ", itens=" + itens +
+                ", pagamento=" + pagamento +
+                ", devolucao=" + devolucao +
+                '}';
     }
 }
