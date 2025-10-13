@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class WishList {
     private int id;
@@ -32,6 +33,19 @@ public class WishList {
 
     public void removerLivro(String livro) {
         livrosDesejados.remove(livro);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WishList wishList = (WishList) o;
+        return id == wishList.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
