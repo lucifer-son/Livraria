@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.Objects;
 
 public class Avaliacao {
     private int id;
@@ -53,5 +54,29 @@ public class Avaliacao {
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Avaliacao avaliacao = (Avaliacao) o;
+        return id == avaliacao.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Avaliacao{" +
+                "id=" + id +
+                ", nota=" + nota +
+                ", comentario='" + comentario + '\'' +
+                ", data=" + data +
+                ", aprovado=" + aprovado +
+                '}';
     }
 }
