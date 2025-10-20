@@ -1,0 +1,172 @@
+@startuml
+
+' Classes
+class Avaliacao {
+  -id: int
+  -nota: int
+  -comentario: String
+  -data: Date
+  -aprovado: boolean
+}
+
+class Carrinho {
+  -id: int
+  -itens: List<ItemPedido>
+}
+
+class Categoria {
+  -id: String
+  -nome: String
+  -descricao: String
+}
+
+class Cliente {
+  -id: String
+  -nome: String
+  -email: String
+  -senha: String
+  -telefones: List<String>
+  -enderecos: List<Endereco>
+  -dataRegistro: Date
+  -wishlist: WishList
+  -carrinho: Carrinho
+  -historicoPedidos: List<Pedido>
+}
+
+class CupomPromocional {
+  -id: int
+  -codigo: String
+  -tipoDesconto: String
+  -dataInicio: Date
+  -dataFim: Date
+  -aplicacaoMinima: double
+  -usoMaximo: int
+}
+
+class Devolucao {
+  -id: int
+  -motivo: String
+  -dataSolicitacao: Date
+  -status: String
+}
+
+class Endereco {
+  -id: String
+  -rua: String
+  -numero: String
+  -complemento: String
+  -cidade: String
+  -estado: String
+  -cep: String
+  -pais: String
+}
+
+class EnderecoEntrega {
+  -id: int
+  -empresaTransporte: String
+  -codigoRastreio: String
+  -statusEntrega: String
+}
+
+class ItemPedido {
+  -id: int
+  -livro: String
+  -quantidade: int
+  -precoUnitario: double
+}
+
+class Livro {
+  -id: String
+  -titulo: String
+  -autores: List<String>
+  -editora: String
+  -isbn: String
+  -anoPublicacao: int
+  -descricao: String
+  -preco: double
+  -estoque: int
+  -peso: double
+  -categoria: String
+  -imagem: String
+  -numPaginas: int
+  -avaliacoes: List<Avaliacao>
+}
+
+class Notificacao {
+  -id: int
+  -tipo: String
+  -mensagem: String
+  -data: Date
+  -status: String
+}
+
+class Pagamento {
+  -id: int
+  -tipo: String
+  -dados: String
+  -status: String
+  -data: Date
+}
+
+class Pedido {
+  -id: int
+  -cliente: String
+  -data: Date
+  -status: StatusPedido
+  -enderecoEntrega: EnderecoEntrega
+  -metodoPagamento: String
+  -frete: double
+  -valorTotal: double
+  -itens: List<ItemPedido>
+  -pagamento: Pagamento
+  -devolucao: Devolucao
+}
+
+enum Pedido.StatusPedido {
+  PENDENTE
+  PROCESSANDO
+  ENVIADO
+  ENTREGUE
+  CANCELADO
+}
+
+class RelatorioVendas {
+}
+
+class RelatorioVendas.VendaResumo {
+  -data: Date
+  -totalPedidos: long
+  -receita: double
+}
+
+class Usuario {
+  -id: int
+  -login: String
+  -senha: String
+  -roles: Set<String>
+}
+
+class WishList {
+  -id: int
+  -livrosDesejados: List<String>
+}
+
+' Relacionamentos
+Cliente "1" *-- "many" Endereco
+Cliente "1" *-- "many" Pedido : historicoPedidos
+Cliente "1" -- "1" WishList : wishlist
+Cliente "1" -- "1" Carrinho : carrinho
+
+Livro "1" *-- "many" Avaliacao : avaliacoes
+Categoria "1" -- "many" Livro : categoria
+
+Pedido "1" *-- "many" ItemPedido : itens
+Pedido "1" -- "1" Pagamento : pagamento
+Pedido "1" -- "0..1" Devolucao : devolucao
+Pedido "1" -- "1" EnderecoEntrega : enderecoEntrega
+
+Carrinho "1" *-- "many" ItemPedido : itens
+
+RelatorioVendas +-- RelatorioVendas.VendaResumo
+
+@enduml
