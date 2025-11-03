@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-public class Cliente {
-    private String id;
-    private String nome;
-    private String email;
-    private String senha;
+public class Cliente extends Usuario {
+    private String cpf;
     private List<String> telefones;
     private List<Endereco> enderecos;
     private Date dataRegistro;
@@ -14,47 +12,21 @@ public class Cliente {
     private Pedido.Carrinho carrinho;
     private List<Pedido> historicoPedidos;
 
-    public Cliente(String id, String nome, String email, String senha, List<String> telefones, List<Endereco> enderecos, Date dataRegistro) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
+    public Cliente(String id, String nome, String cpf, String email, String senha, List<String> telefones, List<Endereco> enderecos, Date dataRegistro) {
+        super(id, nome, email, senha);
+        this.cpf = cpf;
         this.telefones = telefones;
         this.enderecos = enderecos;
         this.dataRegistro = dataRegistro;
-        this.historicoPedidos = new ArrayList<>(); // Inicializa a lista de pedidos
+        this.historicoPedidos = new ArrayList<>();
     }
 
-    public String getId() {
-        return id;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public List<String> getTelefones() {
@@ -103,5 +75,19 @@ public class Cliente {
 
     public void setHistoricoPedidos(List<Pedido> historicoPedidos) {
         this.historicoPedidos = historicoPedidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "usuario=" + super.toString() +
+                ", cpf='" + cpf + '\'' +
+                ", telefones=" + telefones +
+                ", enderecos=" + enderecos +
+                ", dataRegistro=" + dataRegistro +
+                ", wishlist=" + wishlist +
+                ", carrinho=" + carrinho +
+                ", historicoPedidos=" + historicoPedidos +
+                '}';
     }
 }

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class Livro {
 
@@ -33,6 +34,28 @@ public class Livro {
         public void setDescricao(String descricao) {
             this.descricao = descricao;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Categoria categoria = (Categoria) o;
+            return Objects.equals(id, categoria.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+
+        @Override
+        public String toString() {
+            return "Categoria{" +
+                    "id='" + id + '\'' +
+                    ", nome='" + nome + '\'' +
+                    ", descricao='" + descricao + '\'' +
+                    '}';
+        }
     }
 
     private String id;
@@ -66,6 +89,10 @@ public class Livro {
         this.categoria = categoria;
         this.imagem = imagem;
         this.numPaginas = numPaginas;
+    }
+
+    public boolean verificarDisponibilidade() {
+        return this.estoque > 0;
     }
 
     public String getId() {
@@ -178,5 +205,38 @@ public class Livro {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Livro livro = (Livro) o;
+        return Objects.equals(id, livro.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id='" + id + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autores=" + autores +
+                ", editora='" + editora + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", anoPublicacao=" + anoPublicacao +
+                ", descricao='" + descricao + '\'' +
+                ", preco=" + preco +
+                ", estoque=" + estoque +
+                ", peso=" + peso +
+                ", categoria=" + categoria +
+                ", imagem='" + imagem + '\'' +
+                ", numPaginas=" + numPaginas +
+                ", avaliacoes=" + avaliacoes +
+                '}';
     }
 }

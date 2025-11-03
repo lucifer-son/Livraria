@@ -7,6 +7,7 @@ public class Avaliacao {
     private String comentario;
     private Date data;
     private boolean aprovado;
+    private static int contadorInstancias = 0;
 
     public Avaliacao(int id, int nota, String comentario, Date data, boolean aprovado) {
         this.id = id;
@@ -14,6 +15,7 @@ public class Avaliacao {
         this.comentario = comentario;
         this.data = data;
         this.aprovado = aprovado;
+        contadorInstancias++;
     }
 
     public int getId() {
@@ -54,6 +56,14 @@ public class Avaliacao {
 
     public void setAprovado(boolean aprovado) {
         this.aprovado = aprovado;
+    }
+
+    public boolean validarNota() {
+        return this.nota >= 1 && this.nota <= 5;
+    }
+
+    public static int getContadorInstancias() {
+        return contadorInstancias;
     }
 
     @Override

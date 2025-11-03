@@ -1,37 +1,44 @@
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-public class Usuario {
-    private int id;
-    private String login;
+public abstract class Usuario {
+    private String id;
+    private String nome;
+    private String email;
     private String senha;
     private Set<String> roles;
 
-    public Usuario() {
-        this.roles = new HashSet<>();
-    }
-
-    public Usuario(int id, String login, String senha) {
+    public Usuario(String id, String nome, String email, String senha) {
         this.id = id;
-        this.login = login;
+        this.nome = nome;
+        this.email = email;
         this.senha = senha;
         this.roles = new HashSet<>();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -56,10 +63,24 @@ public class Usuario {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
     public String toString() {
         return "Usuario{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
                 ", roles=" + roles +
                 '}';
     }

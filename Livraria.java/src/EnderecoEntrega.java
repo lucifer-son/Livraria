@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class EnderecoEntrega {
     private int id;
     private String empresaTransporte;
@@ -47,6 +49,19 @@ public class EnderecoEntrega {
 
     public boolean isEntregue() {
         return "ENTREGUE".equalsIgnoreCase(statusEntrega);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EnderecoEntrega that = (EnderecoEntrega) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
