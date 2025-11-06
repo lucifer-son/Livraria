@@ -1,8 +1,5 @@
 import java.util.UUID;
 
-/**
- * Serviço dedicado ao cadastro de usuários genéricos (não clientes), como Administradores.
- */
 public class UsuarioCadastroService {
 
     private UsuarioRepositorio usuarioRepo;
@@ -23,3 +20,4 @@ public class UsuarioCadastroService {
         return novoAdmin;
     }
 }
+
