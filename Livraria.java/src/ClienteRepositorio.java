@@ -3,7 +3,7 @@ public class ClienteRepositorio extends AbstractRepositorio<Cliente> {
     private static int contadorInstancias = 0;
 
     public ClienteRepositorio() {
-        super(Cliente.class); // Passa a classe Cliente para o construtor pai
+        super(Cliente.class);
         contadorInstancias++;
     }
 
@@ -34,3 +34,4 @@ public class ClienteRepositorio extends AbstractRepositorio<Cliente> {
         return contadorInstancias;
     }
 }
+
