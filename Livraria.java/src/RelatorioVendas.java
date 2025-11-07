@@ -38,7 +38,6 @@ public class RelatorioVendas {
         }
     }
 
-    // método de exemplo que gera lista de resumos fictícios para teste
     public List<VendaResumo> gerarResumoSimulado(Date inicio, Date fim) {
         List<VendaResumo> lista = new ArrayList<>();
 

@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.Objects;
 
 public class CupomPromocional {
     private int id;
@@ -73,5 +74,27 @@ public class CupomPromocional {
 
     public void setUsoMaximo(int usoMaximo) {
         this.usoMaximo = usoMaximo;
+    }
+
+    @Override
+    public String toString() {
+        return "CupomPromocional{" +
+                "id=" + id +
+                ", codigo='" + codigo + '\'' +
+                ", tipoDesconto='" + tipoDesconto + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CupomPromocional that = (CupomPromocional) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

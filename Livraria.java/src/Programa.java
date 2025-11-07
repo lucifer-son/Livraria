@@ -1,79 +1,101 @@
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 
 public class Programa {
+
     public static void main(String[] args) {
-        // Categoria
-        Categoria categoria = new Categoria("1", "Ficção Científica", "Livros de ficção futurista");
-        System.out.println("Categoria criada: " + categoria.getNome());
+        System.out.println("Iniciando testes...");
 
-        // Endereco
-        Endereco endereco = new Endereco("1", "Rua das Estrelas", "42", "Apto 101", "São Paulo", "SP", "01000-000", "Brasil");
+        // Teste da classe Endereco
+        Endereco endereco = new Endereco("1", "Rua das Estrelas", "42", "Apto 101", "São Paulo", "SP", "01000-000", "Brasil", "Transportadora XYZ, Rastreio: XYZ987654321, Status: PROCESSANDO");
+        assert "Rua das Estrelas".equals(endereco.getRua());
+        System.out.println("Classe Endereco testada com sucesso.");
 
-        // Cliente
+        // Teste da classe Cliente
         List<String> telefones = new ArrayList<>();
         telefones.add("(11) 99999-9999");
         List<Endereco> enderecos = new ArrayList<>();
         enderecos.add(endereco);
         Cliente cliente = new Cliente("1", "João da Silva", "joao@email.com", "123456", telefones, enderecos, new Date());
+        assert "João da Silva".equals(cliente.getNome());
+        System.out.println("Classe Cliente testada com sucesso.");
 
-        // Wishlist e Carrinho do Cliente
+        // Teste da classe WishList
         WishList wishList = new WishList(1);
         cliente.setWishlist(wishList);
+        assert cliente.getWishlist() != null;
+        System.out.println("Classe WishList testada com sucesso.");
+
+        // Teste da classe Carrinho
         Carrinho carrinho = new Carrinho(1, new ArrayList<>());
         cliente.setCarrinho(carrinho);
-        System.out.println("Cliente criado: " + cliente.getNome());
+        assert cliente.getCarrinho() != null;
+        System.out.println("Classe Carrinho testada com sucesso.");
 
-        // Livro
+        // Teste da classe Livro
         List<String> autores = new ArrayList<>();
         autores.add("Autor Exemplo");
-        Livro livro = new Livro("LIV001", "Uma Aventura no Espaço", autores, "Editora Galáxia", "978-3-16-148410-0", 2023, "Descrição do livro...", 49.90, 100, 0.5, categoria.getId(), "/img/livro.jpg", 300);
-        System.out.println("Livro criado: " + livro.getTitulo());
+        Livro livro = new Livro("LIV001", "Uma Aventura no Espaço", autores, "Editora Galáxia", "978-3-16-148410-0", 2023, "Descrição do livro...", 49.90, 100, 0.5, "Ficção Científica", "/img/livro.jpg", 300);
+        assert "Uma Aventura no Espaço".equals(livro.getTitulo());
+        System.out.println("Classe Livro testada com sucesso.");
 
-        // Avaliacao do Livro
+        // Teste da classe Avaliacao
         Avaliacao avaliacao = new Avaliacao(1, 5, "Ótimo livro!", new Date(), true);
-        List<Avaliacao> avaliacoes = new ArrayList<>();
-        avaliacoes.add(avaliacao);
-        livro.setAvaliacoes(avaliacoes);
+        assert 5 == avaliacao.getRating();
+        System.out.println("Classe Avaliacao testada com sucesso.");
 
-        // ItemPedido e adição ao Carrinho
+        // Teste da classe ItemPedido
         ItemPedido itemPedido = new ItemPedido(1, livro.getId(), 1, livro.getPreco());
-        cliente.getCarrinho().getItens().add(itemPedido);
-        System.out.println("Item adicionado ao carrinho: " + itemPedido.getLivro());
-        
+        carrinho.getItens().add(itemPedido);
+        assert carrinho.getItens().size() == 1;
+        System.out.println("Classe ItemPedido testada com sucesso.");
 
-        // Pedido
-        EnderecoEntrega enderecoEntrega;
-        Pedido pedido = new Pedido(1, cliente.getId(), new Date(), Pedido.StatusPedido.PROCESSANDO, enderecoEntrega, "Cartão de Crédito", 10.0, 59.90);
-        pedido.setItens(cliente.getCarrinho().getItens());
-        System.out.println("Pedido criado com status: " + pedido.getStatus());
+        // Teste da classe Pedido
+        Pedido pedido = new Pedido.Builder(1, cliente.getId(), new Date())
+                .withStatus(Pedido.StatusPedido.PROCESSANDO)
+                .withEndereco(endereco)
+                .withMetodoPagamento("Cartão de Crédito")
+                .withFrete(10.0)
+                .withValorTotal(59.90)
+                .withItens(carrinho.getItens())
+                .build();
+        assert Pedido.StatusPedido.PROCESSANDO.equals(pedido.getStatus());
+        System.out.println("Classe Pedido testada com sucesso.");
 
-        // Pagamento do Pedido
+        // Teste da classe Pagamento
         Pagamento pagamento = new Pagamento(1, "Cartão de Crédito", "**** **** **** 1234", "APROVADO", new Date());
-        pedido.setPagamento(pagamento);
+        assert "APROVADO".equals(pagamento.getStatus());
+        System.out.println("Classe Pagamento testada com sucesso.");
 
-        // Devolucao (opcional)
+        // Teste da classe Devolucao
         Devolucao devolucao = new Devolucao(1, "Produto danificado", new Date(), "EM_ANALISE");
-        pedido.setDevolucao(devolucao);
+        assert "EM_ANALISE".equals(devolucao.getStatus());
+        System.out.println("Classe Devolucao testada com sucesso.");
 
-        // Cupom Promocional
+        // Teste da classe CupomPromocional
         CupomPromocional cupom = new CupomPromocional(1, "PROMO10", "PORCENTAGEM", new Date(), new Date(), 50.0, 100);
-        System.out.println("Cupom criado: " + cupom.getCodigo());
+        assert "PROMO10".equals(cupom.getCodigo());
+        System.out.println("Classe CupomPromocional testada com sucesso.");
 
-        // Usuario (Admin)
+        // Teste da classe Usuario
         Usuario usuario = new Usuario(1, "admin", "admin123");
         usuario.setRoles(new HashSet<>(List.of("ADMIN", "USER")));
-        System.out.println("Usuário admin criado com roles: " + usuario.getRoles());
+        assert usuario.getRoles().contains("ADMIN");
+        System.out.println("Classe Usuario testada com sucesso.");
 
-        // Notificacao
+        // Teste da classe Notificacao
         Notificacao notificacao = new Notificacao(1, "CONFIRMACAO_PEDIDO", "Seu pedido foi confirmado!", new Date(), "ENVIADA");
-        System.out.println("Notificação enviada: " + notificacao.getTipo());
+        assert "ENVIADA".equals(notificacao.getStatus());
+        System.out.println("Classe Notificacao testada com sucesso.");
 
-        // Relatorio de Vendas
+        // Teste da classe RelatorioVendas
         RelatorioVendas relatorio = new RelatorioVendas();
         List<RelatorioVendas.VendaResumo> resumo = relatorio.gerarResumoSimulado(new Date(), new Date());
-        System.out.println("Relatório de vendas gerado com " + resumo.size() + " registro(s).");
+        assert resumo != null;
+        System.out.println("Classe RelatorioVendas testada com sucesso.");
+
+        System.out.println("Todos os testes foram concluídos com sucesso!");
     }
 }

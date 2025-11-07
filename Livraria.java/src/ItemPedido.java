@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class ItemPedido {
     private int id;
     private Pedido pedido;
@@ -64,5 +66,18 @@ public class ItemPedido {
                 ", quantidade=" + quantidade +
                 ", precoUnitario=" + precoUnitario +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemPedido that = (ItemPedido) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

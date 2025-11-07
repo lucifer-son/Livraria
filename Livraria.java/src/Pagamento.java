@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.Objects;
 
 public class Pagamento {
     private int id;
@@ -53,5 +54,28 @@ public class Pagamento {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "id=" + id +
+                ", tipo='" + tipo + '\'' +
+                ", status='" + status + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pagamento pagamento = (Pagamento) o;
+        return id == pagamento.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Objects;
 
 public class Livro {
     private String id;
@@ -146,5 +147,27 @@ public class Livro {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id='" + id + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", isbn='" + isbn + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Livro livro = (Livro) o;
+        return Objects.equals(id, livro.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
